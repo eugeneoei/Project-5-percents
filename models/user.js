@@ -77,7 +77,6 @@ module.exports = function(sequelize, DataTypes) {
         delete jsonUser.is_admin;
         delete jsonUser.createdAt;
         delete jsonUser.updatedAt;
-        delete jsonUser.id;
 
         return jsonUser;
       }

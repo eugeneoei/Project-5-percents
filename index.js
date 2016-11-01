@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 // const dotenv = require('dotenv');
 // dotenv.load();
+var morgan = require('morgan')
 var db = require('./models');
 var expressJWT = require('express-jwt');
 var jwt = require('jsonwebtoken');
@@ -18,9 +19,9 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
 
+app.use(morgan('dev'))
+
 var server = app.listen(process.env.PORT || 3000);
-
-
 
 // UNPROTECTED ROUTES
 // home page
@@ -85,6 +86,7 @@ app.use(expressJWT({
  secret: secret,
  credentialsRequired: true,
  getToken: function fromHeaderOrQuerystring (req) {
+   console.log('expressJWT called')
    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
        return req.headers.authorization.split(' ')[1];
    } else if (req.query && req.query.token) {
@@ -94,12 +96,25 @@ app.use(expressJWT({
  }
 }));
 
+
+
+app.use(function (err, req, res, next) {
+  console.log(err);
+  // send an appropriate status code & JSON object saying there was an error, if there was one.
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).send({message: 'You need an authorization token to view this information.'})
+  }
+  // create an unauthorised ejs file to display authorization message
+});
+
+
 // show all drops when user looged in
 app.get('/drops', function (req, res) {
+  console.log('/drops route, get all drops');
   // console.log('did user get redirected?', req.user);
   // query to db to show all drops once user has logged in
   db.drop.findAll().then(function(drops) {
-    console.log(drops);
+    // console.log(drops);
     res.render("user", {drops: drops});
   })
   // console.log('user.ejs should be rendered');
@@ -116,11 +131,27 @@ app.get('/drops/:id', function (req, res) {
 
 // user joins drop
 // should populate dropsUsers table
+app.post('/joinDrop/:id', function (req, res) {
+  console.log('joinDrop route');
+  db.drop.find({
+    where: {id: req.params.id}
+  }).then(function(drop){
+    console.log('dropsusers populated?');
+    drop.addUser(req.user.id)
+    // db.dropsusers.findOrCreate({
+    //   where: {dropId: drop.id,
+    //           userId: req.user.id }
+    // }).then(function(data) {
+    //   console.log('join table info here', data);
+    //   res.redirect('/drops/:id')
+    // })
+  })
+});
 
 // get all polls
 app.get('/polls', function (req, res) {
   db.poll.findAll().then(function(polls) {
-    console.log(polls);
+    // console.log(polls);
     res.json(polls);
     // users will be an array of all User instances
   });
@@ -165,15 +196,6 @@ app.post('/options', function (req, res) {
   });
 });
 
-
-app.use(function (err, req, res, next) {
-  console.log(err);
-  // send an appropriate status code & JSON object saying there was an error, if there was one.
-  if (err.name === 'UnauthorizedError') {
-    res.status(401).send({message: 'You need an authorization token to view this information.'})
-  }
-  // create an unauthorised ejs file to display authorization message
-});
 
 
 

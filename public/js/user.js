@@ -6,6 +6,7 @@ $("document").ready(function(){
   $('#createPoll').hide();
   $('#createOption').hide();
   $('#thumbnail').on('click', '.viewDropButton', getDropInfo);
+  $(document).on('click', '.joinDropButton', submitUserDrop)
   // $('#oneNail').hide();
 
 
@@ -63,8 +64,6 @@ $("document").ready(function(){
 
   // event handler for view drop button
   function getDropInfo(event) {
-    console.log(event);
-    console.log('view drop button clicked');
     var dropID = event.currentTarget.value;
     $('#thumbnail').hide(); // hides all drops
 
@@ -94,4 +93,17 @@ $("document").ready(function(){
     })
   }
 
+  // event handler for submiting drop
+  function submitUserDrop(event) {
+    var dropID = event.currentTarget.value;
+    $.ajax({
+      url: "http://localhost:3000/joinDrop/" + dropID,
+      method: "POST",
+      headers: {authorization: 'Bearer ' + token}
+    }).done(function(dataFromServer) {
+      // show modal
+    }).fail(function() {
+      console.log('join drop failed');
+    });
+  }
 }); // end of content loaded
