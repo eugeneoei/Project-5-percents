@@ -1,8 +1,6 @@
 $("document").ready(function(){
   console.log("loaded");
 
-  // stores token if exist in local storage
-  // var token = window.localStorage.getItem('jwt');
 
   // signup form
   $('form#signup').submit(function(event) {

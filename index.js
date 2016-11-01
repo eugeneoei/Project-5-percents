@@ -97,6 +97,7 @@ app.use(expressJWT({
 // user page
 app.get('/user', function (req, res) {
   // console.log('did user get redirected?', req.user);
+  // query to db to show all drops once user has logged in
   res.render("user");
   // console.log('user.ejs should be rendered');
 });
