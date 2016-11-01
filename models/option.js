@@ -6,13 +6,14 @@ module.exports = function(sequelize, DataTypes) {
     product_retail_price: DataTypes.STRING,
     product_code: DataTypes.STRING,
     pollId: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
     votes: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
         models.option.belongsTo(models.poll);
-
+        models.option.belongsTo(models.user);
       }
     }
   });

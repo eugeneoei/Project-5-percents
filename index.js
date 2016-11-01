@@ -109,7 +109,7 @@ app.use(function (err, req, res, next) {
 
 
 // show all drops when user looged in
-app.get('/drops', function (req, res) {
+app.get('/home', function (req, res) {
   console.log('/drops route, get all drops');
   // console.log('did user get redirected?', req.user);
   // query to db to show all drops once user has logged in
@@ -120,7 +120,15 @@ app.get('/drops', function (req, res) {
   // console.log('user.ejs should be rendered');
 });
 
-// read/get one drop
+
+// get all drops
+app.get('/drops', function(req,res) {
+  db.drop.findAll().then(function(drops) {
+    res.json(drops);
+  });
+});
+
+// get one drop
 app.get('/drops/:id', function (req, res) {
   db.drop.find({
     where: {id: req.params.id}
@@ -138,22 +146,21 @@ app.post('/joinDrop/:id', function (req, res) {
   }).then(function(drop){
     console.log('dropsusers populated?');
     drop.addUser(req.user.id)
-    // db.dropsusers.findOrCreate({
-    //   where: {dropId: drop.id,
-    //           userId: req.user.id }
-    // }).then(function(data) {
-    //   console.log('join table info here', data);
-    //   res.redirect('/drops/:id')
-    // })
+    res.json({drop:drop})
   })
 });
 
+// POLLS CRUD
+
 // get all polls
 app.get('/polls', function (req, res) {
-  db.poll.findAll().then(function(polls) {
-    // console.log(polls);
+  db.poll.findAll({
+    include: [db.option]
+  }).then(function(polls) {
+    // console.log('see here >>>>>>>>>', polls.options);
+    console.log(polls);
+    // need to include all options here as well
     res.json(polls);
-    // users will be an array of all User instances
   });
 });
 
@@ -170,6 +177,8 @@ app.post('/polls', function (req, res) {
   });
 });
 
+// OPTIONS CRUD
+
 // get all options
 app.get('/options', function (req, res) {
 
@@ -177,13 +186,14 @@ app.get('/options', function (req, res) {
 
 // create new option
 app.post('/options', function (req, res) {
-  console.log('did you come in???????');
-  console.log(req.body);
+  // console.log('did you come in???????');
+  // console.log(req.body);
   db.poll.findOne({
     where:{id: req.body.pollId}
   }).then(function(poll) {
     console.log(poll);
     poll.createOption({
+      userId: req.user.id,
       image_url: req.body.imageUrl,
       product_description: req.body.pdtDescription,
       product_retail_price: req.body.pdtRetailPrice,
@@ -194,6 +204,31 @@ app.post('/options', function (req, res) {
       // res.redirect('/polls');
     });
   });
+});
+
+// get option created by user
+app.get('/options/:id/edit', function (req,res) {
+  db.option.find({
+    where: {id: req.params.id}
+  }).then(function(data) {
+    res.json(data)
+  })
+});
+
+// update option
+app.put('/options/:id', function (req, res) {
+  db.option.update({
+    image_url: req.body.imageUrl,
+    product_description: req.body.pdtDescription,
+    product_retail_price: req.body.pdtRetailPrice,
+    product_code: req.body.pdtCode
+  }, {
+    where: {
+      id: req.params.id
+    }
+  }).then(function(data) {
+    res.json(data)
+  })
 });
 
 

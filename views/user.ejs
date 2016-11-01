@@ -3,12 +3,17 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
     <script type="text/javascript" src="../js/user.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
 
   </head>
   <body>
@@ -17,38 +22,65 @@
 
     <div class='container'>
       <div class='row'>
-        <button type="button" class="btn btn-default">Polls</button>
-        <button type="button" class="btn btn-default">Drops</button>
+        <button id='pollButton' type="button" class="btn btn-default">Polls</button>
+        <button id='dropButton' type="button" class="btn btn-default">Drops</button>
       </div>
     </div>
 
-
-    <div class="row" id="thumbnail">
-      <% drops.forEach(function(item) { %>
-        <% var id = item.id %>
-        <% var image_url = item.image_url %>
-        <% var product_code = item.product_code %>
-        <% var product_description = item.product_description %>
-        <% var product_discount_price = item.product_category %>
-        <% var product_category = item.product_category %>
-      <div class="col-sm-6 col-md-4">
-        <div class="thumbnail">
-          <img src="<%= image_url %>" alt="...">
-          <div class="caption">
-            <h3><%= product_category %></h3>
-            <p><%= product_description %></p>
-            <p>
+    <div class="container">
+      <div class="row" id="thumbnail">
+        <% drops.forEach(function(item) { %>
+          <% var id = item.id %>
+          <% var image_url = item.image_url %>
+          <% var product_code = item.product_code %>
+          <% var product_description = item.product_description %>
+          <% var product_discount_price = item.product_category %>
+          <% var product_category = item.product_category %>
+          <div class="card col-md-4 col-sm-12 col-xs-12">
+            <img class="card-img-top image" src="<%= image_url %>" alt="Card image cap">
+            <div class="card-block">
+              <h4 class="card-title"><%= product_category %></h4>
+              <p class="card-text"><%= product_description %></p>
               <button type="button" class="btn btn-default viewDropButton" value="<%= id %>">Vew Drop</button>
-              <a href="#" class="btn btn-default" role="button">Button</a>
-            </p>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+
+    <div class='container'>
+      <div class="row" id='oneNail'></div>
+    </div>
+
+    <div class='container' id='allPolls'>
+
+    </div>
+
+    <div class='container'>
+      <div class="row" id='allDrops'>
+
+      </div>
+    </div>
+
+    <div class="row" id='pmtForm'></div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            TO INCLUDE STRIPE PAYMENT IN THIS MODAL
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>
-      <% }); %>
-    </div>
-
-    <div class="row" id='oneNail'>
-
     </div>
 
 

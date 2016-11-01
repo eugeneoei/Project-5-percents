@@ -2,7 +2,6 @@
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
-
     return queryInterface.bulkInsert('drops', [
         {
             image_url: 'http://www.jcpenneyoptical.com/wp-content/uploads/2015/05/RAYBANSUN_RB3016-S-W0365-49__2500x1400-Face-1200x672-1200x672.png',
