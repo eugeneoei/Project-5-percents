@@ -4,13 +4,28 @@
     <meta charset="utf-8">
     <title></title>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
     <script type="text/javascript" src="../js/user.js"></script>
 
   </head>
   <body>
 
-    <h1>this is user's home page</h1>
+    <h1>this is user's home page where user can view drops, create polls and add options</h1>
+
+    <div class='container'>
+      <div class='row'>
+        <button id='newPollBtn' class="button-primary">Polls</button>
+        <button id='newPollBtn' class="button-primary">Drops!</button>
+      </div>
+    </div>
+
+    <div id='createPoll'>
+      <form id='createPollForm'>
+        <input id='pollCategory' type="text" name="pollCategory" placeholder="What category does your poll fall under?">
+        <button type="submit">Create!</button>
+      </form>
+    </div>
 
 
 

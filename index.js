@@ -44,7 +44,7 @@ app.post('/signup', function(req, res) {
     if(created) {
       // generate token once user is successfully created
       var token = jwt.sign(user.toJSON(), secret);
-      res.json({token: token, status: true});
+      res.json({user: user, token: token, status: true});
     }
     else {
       console.log('user creation failed');
@@ -66,7 +66,7 @@ app.post('/login', function(req, res) {
       // var json = {user: user, token: token}
       console.log('should be working')
       // res.render('user', {token: token})
-      res.json({token: token, status: true});
+      res.json({user: user, token: token, status: true});
     } else {
       console.log('should redirect status false');
       // res.redirect('/')
@@ -78,7 +78,7 @@ app.post('/login', function(req, res) {
 
 
 // PROTECTED ROUTES
-// any routes after this will be protected?
+// any routes after this require a token to access
 // app.use(expressJWT({secret: secret}));
 
 app.use(expressJWT({
@@ -94,19 +94,69 @@ app.use(expressJWT({
  }
 }));
 
+// user page
 app.get('/user', function (req, res) {
-  console.log('did user get redirected?', req.user);
+  // console.log('did user get redirected?', req.user);
   res.render("user");
-  console.log('user.ejs should be rendered');
+  // console.log('user.ejs should be rendered');
+});
+
+// get all polls
+app.get('/polls', function (req, res) {
+  db.poll.findAll().then(function(polls) {
+    console.log(polls);
+    res.json(polls);
+    // users will be an array of all User instances
+  });
+});
+
+// create new poll
+app.post('/polls', function (req, res) {
+  db.user.findOne({
+    where:{email: req.user.email}
+  }).then(function(user) {
+    user.createPoll({
+      poll_category: req.body.pollCategory
+    }).then(function(data) {
+      res.json({data: data});
+    });
+  });
+});
+
+// get all options
+app.get('/options', function (req, res) {
+
+});
+
+// create new option
+app.post('/options', function (req, res) {
+  console.log('did you come in???????');
+  console.log(req.body);
+  db.poll.findOne({
+    where:{id: req.body.pollId}
+  }).then(function(poll) {
+    console.log(poll);
+    poll.createOption({
+      image_url: req.body.imageUrl,
+      product_description: req.body.pdtDescription,
+      product_retail_price: req.body.pdtRetailPrice,
+      product_code: req.body.pdtCode
+    }).then(function(data) {
+      res.json({data:data, status: true});
+      console.log('create option success', data);
+      // res.redirect('/polls');
+    });
+  });
 });
 
 
 app.use(function (err, req, res, next) {
+  console.log(err);
   // send an appropriate status code & JSON object saying there was an error, if there was one.
   if (err.name === 'UnauthorizedError') {
     res.status(401).send({message: 'You need an authorization token to view this information.'})
   }
-  // create an unauthorised ejs file
+  // create an unauthorised ejs file to display authorization message
 });
 
 
