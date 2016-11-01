@@ -122,6 +122,7 @@ app.get('/home', function (req, res) {
 
 
 // get all drops
+// this is working
 app.get('/drops', function(req,res) {
   db.drop.findAll().then(function(drops) {
     res.json(drops);
@@ -150,19 +151,30 @@ app.post('/joinDrop/:id', function (req, res) {
   })
 });
 
-// POLLS CRUD
+//////////// POLLS CRUD ////////////
 
 // get all polls
+// to send req.user.id in res.json to allow users to edit the options they created
 app.get('/polls', function (req, res) {
   db.poll.findAll({
     include: [db.option]
   }).then(function(polls) {
-    // console.log('see here >>>>>>>>>', polls.options);
-    console.log(polls);
-    // need to include all options here as well
     res.json(polls);
   });
 });
+
+// get one poll
+// this returns all options of a particular poll where users can cast their votes
+app.get('/polls/:id', function (req, res) {
+  db.poll.findOne({
+    where: {id: req.params.id}
+  }).then(function(poll) {
+    poll.getOptions().then(function(options){
+      res.json(options);
+    });
+  });
+});
+
 
 // create new poll
 app.post('/polls', function (req, res) {
@@ -177,7 +189,7 @@ app.post('/polls', function (req, res) {
   });
 });
 
-// OPTIONS CRUD
+//////////// OPTIONS CRUD ////////////
 
 // get all options
 app.get('/options', function (req, res) {
@@ -209,7 +221,10 @@ app.post('/options', function (req, res) {
 // get option created by user
 app.get('/options/:id/edit', function (req,res) {
   db.option.find({
-    where: {id: req.params.id}
+    where: {
+      id: req.params.id,
+      userId: req.user.id
+    }
   }).then(function(data) {
     res.json(data)
   })
@@ -224,16 +239,13 @@ app.put('/options/:id', function (req, res) {
     product_code: req.body.pdtCode
   }, {
     where: {
-      id: req.params.id
+      id: req.params.id,
+      userId: req.user.id
     }
   }).then(function(data) {
     res.json(data)
   })
 });
-
-
-
-
 
 
 

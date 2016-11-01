@@ -125,15 +125,18 @@ $("document").ready(function(){
       console.log('all polls including options returned from server');
       console.log(dataFromServer);
       // $('#oneNail').hide()
+
       $('#allPolls').append(
 
-      )
 
+      )
+      // how to dynamically append dataFromServer in
       // <div class="row">
       //   <div class="col-md-4">
       //     <div class="col-md-12">
       //       <div class="col-md-6">
       //         here is where the name of the category of product is and where
+      //         poll.poll_category
       //       </div>
       //       <label for="">posted by which user</label>
       //     </div>
@@ -169,6 +172,7 @@ $("document").ready(function(){
     }).done(function(dataFromServer) {
       console.log('returned all drop from server');
       console.log(dataFromServer);
+      // this route is working. just need to append it in
 
     }).fail(function() {
       console.log('failed to get all drops');
