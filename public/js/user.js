@@ -5,6 +5,9 @@ $("document").ready(function(){
   var token = window.localStorage.getItem('jwt');
   $('#createPoll').hide();
   $('#createOption').hide();
+  $('#thumbnail').on('click', '.viewDropButton', getDropInfo);
+  // $('#oneNail').hide();
+
 
   // var pollForm = $('createPoll')
   // pollForm.remove()
@@ -33,8 +36,6 @@ $("document").ready(function(){
   });
 
   // create option form
-  // $(document).on('submit', 'form#createOptionForm', function(event) {
-
   $('form#createOptionForm').submit(function(event) {
     event.preventDefault();
 
@@ -60,6 +61,37 @@ $("document").ready(function(){
     });
   });
 
+  // event handler for view drop button
+  function getDropInfo(event) {
+    console.log(event);
+    console.log('view drop button clicked');
+    var dropID = event.currentTarget.value;
+    $('#thumbnail').hide(); // hides all drops
 
+    $.ajax({
+      url: "http://localhost:3000/drops/" + dropID,
+      method: "GET",
+      headers: {authorization: 'Bearer ' + token},
+    }).done(function(dataFromServer) {
+      console.log(dataFromServer);
+      $('#oneNail').append(
+        '<div class="col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4">' +
+          '<div class="thumbnail">' +
+            '<img src="' + dataFromServer.drop.image_url + '">' +
+            '<div class="caption">' +
+              '<h3>' + dataFromServer.drop.product_category + '</h3>' +
+              '<p>' + dataFromServer.drop.product_description + '</p>' +
+              '<p>' +
+                '<button type="button" class="btn btn-default joinDropButton" value="' + dataFromServer.drop.id + '">Join Drop</button>' +
+                '<p>7days left!</p>' +
+              '</p>' +
+            '</div>' +
+          '</div>' +
+        '</div>'
+      )
+    }).fail(function() {
+      console.log("failed to get drop from server");
+    })
+  }
 
-});
+}); // end of content loaded

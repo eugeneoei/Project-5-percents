@@ -23,8 +23,8 @@ $("document").ready(function(){
       console.log(jsonFromServer);
       if (jsonFromServer.status) {
         window.localStorage.setItem('jwt', jsonFromServer.token);
-        window.location = '/user?token=' + jsonFromServer.token;
-        // window.location = '/user?token=';
+        window.location = '/drops?token=' + jsonFromServer.token;
+        // window.location = '/drops?token=';
       }
       else {
         window.location = '/';
@@ -54,8 +54,8 @@ $("document").ready(function(){
       console.log(jsonFromServer);
       if (jsonFromServer.status) {
         window.localStorage.setItem('jwt', jsonFromServer.token);
-        window.location = '/user?token=' + jsonFromServer.token;
-        // window.location = '/user?token=';
+        window.location = '/drops?token=' + jsonFromServer.token;
+        // window.location = '/drops?token=';
       }
       else {
         window.location = '/';

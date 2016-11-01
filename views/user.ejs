@@ -23,7 +23,7 @@
     </div>
 
 
-    <div class="row">
+    <div class="row" id="thumbnail">
       <% drops.forEach(function(item) { %>
         <% var id = item.id %>
         <% var image_url = item.image_url %>
@@ -38,7 +38,7 @@
             <h3><%= product_category %></h3>
             <p><%= product_description %></p>
             <p>
-              <button type="button" class="btn btn-default" value="<%= id %>">Vew Drop</button>
+              <button type="button" class="btn btn-default viewDropButton" value="<%= id %>">Vew Drop</button>
               <a href="#" class="btn btn-default" role="button">Button</a>
             </p>
           </div>
@@ -46,6 +46,12 @@
       </div>
       <% }); %>
     </div>
+
+    <div class="row" id='oneNail'>
+
+    </div>
+
+
 
     <div id='createPoll'>
       <form id='createPollForm'>

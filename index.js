@@ -94,8 +94,8 @@ app.use(expressJWT({
  }
 }));
 
-// user page
-app.get('/user', function (req, res) {
+// show all drops when user looged in
+app.get('/drops', function (req, res) {
   // console.log('did user get redirected?', req.user);
   // query to db to show all drops once user has logged in
   db.drop.findAll().then(function(drops) {
@@ -104,6 +104,18 @@ app.get('/user', function (req, res) {
   })
   // console.log('user.ejs should be rendered');
 });
+
+// read/get one drop
+app.get('/drops/:id', function (req, res) {
+  db.drop.find({
+    where: {id: req.params.id}
+  }).then(function(drop) {
+    res.json({drop: drop})
+  })
+});
+
+// user joins drop
+// should populate dropsUsers table
 
 // get all polls
 app.get('/polls', function (req, res) {
