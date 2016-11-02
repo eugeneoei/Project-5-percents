@@ -64,7 +64,7 @@ module.exports = function(sequelize, DataTypes) {
         models.user.belongsToMany(models.drop, {through: "dropsUsers"})
       }
     },
-    instanceMethods: {
+    instanceMethods: { 
       validPassword: function(password) {
         // return if the password matches the hash
         return bcrypt.compareSync(password, this.password);
@@ -75,7 +75,7 @@ module.exports = function(sequelize, DataTypes) {
         var jsonUser = this.get();
         // delete the password from the JSON data, and return
         delete jsonUser.password;
-        delete jsonUser.is_admin;
+        // delete jsonUser.is_admin;
         delete jsonUser.createdAt;
         delete jsonUser.updatedAt;
 

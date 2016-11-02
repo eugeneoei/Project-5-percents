@@ -5,21 +5,25 @@ $("document").ready(function(){
 
   // stores token if exist in local storage
   var token = window.localStorage.getItem('jwt');
-  $('#createPoll').hide();
+  // $('#createPoll').hide();
   $('#createOption').hide();
   $('#myModal').hide();
   $('#thumbnail').on('click', '.viewDropButton', getDropInfo);
-  $('#pollButton').on('click', getAllPolls);
-  $('#dropButton').on('click', getAllDrops);
-  $('#anchorTab').on('click', function() {
+  $('.viewPollButton').on('click', getOnePoll);
+  $('#anchorDropTab').on('click', function() {
     $('#thumbnail').show();
-  })
-
-
+    $('#oneNail').empty()
+  });
+  $('#anchorPollTab').on('click', function() {
+    $('#polls').show();
+    $('#oneNail').empty()
+  });
 
   $(document).on('click', '.joinDropButton', submitUserDrop);
 
 
+  $('#pollButton').on('click', getAllPolls);
+  $('#dropButton').on('click', getAllDrops);
 
   // var pollForm = $('createPoll')
   // pollForm.remove()
@@ -55,6 +59,7 @@ $("document").ready(function(){
 
     var data = {pollId: $("#pollId").val(),
                 imageUrl: $("#imageUrl").val(),
+                pdtTitle: $("#pdtTitle").val(),
                 pdttDescription: $("#pdtDescription").val(),
                 pdtRetailPrice: $("#pdtRetailPrice").val(),
                 pdtCode: $("#pdtCode").val()};
@@ -66,7 +71,7 @@ $("document").ready(function(){
       data: data
     }).done(function(jsonFromServer){
       if (jsonFromServer.status) {
-        window.location = '/user?token=' + token;
+        window.location = '/home?token=' + token;
       }
     }).fail(function() {
       window.location = '/';
@@ -77,6 +82,8 @@ $("document").ready(function(){
   function getDropInfo(event) {
     var dropID = event.currentTarget.value;
     $('#thumbnail').hide(); // hides all drops
+    $('#oneNail').show()
+
 
     $.ajax({
       url: "http://localhost:3000/drops/" + dropID,
@@ -112,7 +119,7 @@ $("document").ready(function(){
     }).done(function(dataFromServer) {
       // console.log('join returned from server');
       // console.log(dataFromServer);
-      $('#oneNail').hide()
+      // $('#oneNail').hide()
       // THIS IS NOT DONE BY THE WAY!!!!!!
       // show form for payment
       // show modal
@@ -153,6 +160,39 @@ $("document").ready(function(){
     }).fail(function() {
       console.log('failed to get all drops');
     });
+  }
+
+  // event handler for one poll
+  function getOnePoll(event) {
+    console.log('view all options button click');
+    var pollID = event.currentTarget.value;
+    $('#polls').hide();
+
+    $.ajax({
+      url: "http://localhost:3000/polls/" + pollID,
+      method: "GET",
+      headers: {authorization: 'Bearer ' + token}
+    }).done(function(dataFromServer) {
+      console.log(dataFromServer);
+
+
+      for (var i = 0; i < dataFromServer.length; i++) {
+        $('#oneNail').append(
+
+          '<div class="card col-sm-4 col-md-4">' +
+            '<img class="card-img-top image" src="' + dataFromServer[i].image_url + '" alt="Card image cap">' +
+            '<div class="card-block">' +
+              '<h4 class="card-title">' + dataFromServer[i].title + '</h4>' +
+              '<a href="#" class="btn btn-primary">Vote</a>' +
+            '</div>' +
+          '</div>'
+        )
+      }
+
+    }).fail(function() {
+      // console.log('join drop failed');
+    });
+
   }
 
 }); // end of content loaded

@@ -21,18 +21,35 @@
     <h1>this is user's home page where user can view drops, create polls and add options</h1>
 
     <ul class="nav nav-tabs" role="tablist">
+    <% if (user.is_admin) { %>
       <li class="nav-item">
-        <a id="anchorTab" class="nav-link" data-toggle="tab" href="#drops" role="tab">Drops</a>
+        <a id="anchorDropTab" class="nav-link active" data-toggle="tab" href="#drops" role="tab">Drops</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#polls" role="tab">Polls</a>
+        <a id="anchorPollTab" class="nav-link" data-toggle="tab" href="#polls" role="tab">Polls</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#createDrop" role="tab">Create Drop</a>
+      </li>
+    <% } else { %>
+      <li class="nav-item">
+        <a id="anchorDropTab" class="nav-link active" data-toggle="tab" href="#drops" role="tab">Drops</a>
+      </li>
+      <li class="nav-item">
+        <a id="anchorPollTab" class="nav-link" data-toggle="tab" href="#polls" role="tab">Polls</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#createPoll" role="tab">Create Poll</a>
+      </li>
+    <% } %>
+
+
+      <!-- <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#messages" role="tab">Messages</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#settings" role="tab">Settings</a>
-      </li>
+      </li> -->
     </ul>
 
     <div class="tab-content">
@@ -62,7 +79,8 @@
       <div class="tab-pane" id="polls" role="tabpanel">
         <% for (var j = 0; j < result[1].length; j++) { %>
           <% var product_category = result[1][j].poll_category %>
-          <% var image = result[1][0].options[0].image_url %>
+          <% var pollId = result[1][j].id %>
+          <% var image = result[1][j].options[0].image_url %>
         <div class="container">
          <!-- <div class="row"> -->
 
@@ -89,14 +107,14 @@
                <% } %>
              <div class="col-md-8">
 
-               <% for (var k = 0; k < result[1][j].options.length; k++) { %>
+               <% for (var k = 0; k < 3; k++) { %>
                  <% var votes = result[1][j].options[k].votes %>
                  <% var title = result[1][j].options[k].title %>
                 <div class="col-md-12">
-                  <div class="col-md-2">
+                  <div class="col-md-4">
                     <span><%= title %></span>
                   </div>
-                  <div class="col-md-2 offset-md-8">
+                  <div class="col-md-2 offset-md-6">
                     <span><%= votes %></span>
                   </div>
                 </div>
@@ -104,12 +122,20 @@
                   <progress class="progress progress-info" value="<%= votes %>" max="<%= totalVotes %>"></progress>
                 </div>
              <% }; %>
+             <button type="button" class="btn btn-secondary viewPollButton" value='<%= pollId %>'>View all options</button>
            </div>
          </div>
          <% }; %>
       </div>
-      <!-- <div class="tab-pane" id="messages" role="tabpanel">...</div>
-      <div class="tab-pane" id="settings" role="tabpanel">...</div> -->
+      <div class="tab-pane" id="createPoll" role="tabpanel">
+        <div>
+          <form id='createPollForm'>
+            <input id='pollCategory' type="text" name="pollCategory" placeholder="What category does your poll fall under?">
+            <button type="submit">Create!</button>
+          </form>
+        </div>
+      </div>
+      <!-- <div class="tab-pane" id="settings" role="tabpanel">...</div> -->
     </div>
 
     <div class='container'>
@@ -121,7 +147,7 @@
 
 
 
-    <div class='container'>
+    <div class='container' id='oneNail'>
       <div class="row" id='oneNail'></div>
     </div>
 
@@ -157,18 +183,14 @@
     </div>
 
 
-    <div id='createPoll'>
-      <form id='createPollForm'>
-        <input id='pollCategory' type="text" name="pollCategory" placeholder="What category does your poll fall under?">
-        <button type="submit">Create!</button>
-      </form>
-    </div>
+
 
     <div id="createOption">
       <form id="createOptionForm">
         <input id="pollId" type="hidden" name="pollId">
         <input id="imageUrl" type="text" name="imageUrl" placeholder="Share an Image">
-        <textarea id="pdtDescription" name="pdttDescription" placeholder="Tell us more about this product!"></textarea>
+        <input id="pdtTitle" type="text" name="pdtTitle" placeholder="Title">
+        <textarea id="pdtDescription" name="pdtDescription" placeholder="Tell us more about this product!"></textarea>
         <input id="pdtRetailPrice" type="text" name="pdtRetailPrice" placeholder="Product\'s current retail price">
         <input id="pdtCode" type="text" name="pdtCode" placeholder="Product code">
         <button type="submit">Create!</button>

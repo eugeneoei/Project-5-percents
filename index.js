@@ -113,19 +113,24 @@ app.get('/home', function (req, res) {
   var result = [];
   db.drop.findAll().then(function(drops) {
     result.push(drops);
-    console.log('check drops first', drops);
-    // res.json(drops);
+    // console.log('check drops first', drops);
     db.poll.findAll({
-      include: [db.option]
+      include: [db.option],
+      order: [ [db.option, 'votes', 'DESC'] ]
     }).then(function(polls) {
-      console.log('did you survive?');
+      // console.log('did you survive?');
       result.push(polls)
-      console.log('check result array again', result);
-    }).then(function() {
-      res.render('user', {result:result})
+      // console.log('check result array again', result);
+      db.user.find({
+        where: {id: req.user.id}
+      }).then(function(user) {
+        console.log(user);
+        res.render('user', {result:result, user:user})
+      })
     })
   });
-  console.log('this is result', result);
+  console.log('see hereeeeeee', req.user);
+  // console.log('this is result', result);
 });
 
 
@@ -215,6 +220,7 @@ app.post('/options', function (req, res) {
     poll.createOption({
       userId: req.user.id,
       image_url: req.body.imageUrl,
+      title: req.body.pdtTitle,
       product_description: req.body.pdtDescription,
       product_retail_price: req.body.pdtRetailPrice,
       product_code: req.body.pdtCode
