@@ -25,6 +25,12 @@ $("document").ready(function(){
         window.localStorage.setItem('jwt', jsonFromServer.token);
         window.location = '/home?token=' + jsonFromServer.token;
         // window.location = '/home?token=';
+        // $.ajax({
+        //   url: "http://localhost:3000/home",
+        //   method: "POST",
+        //   headers: {authorization: 'Bearer ' + jsonFromServer.token},
+        // })
+
       }
       else {
         window.location = '/';
@@ -51,11 +57,16 @@ $("document").ready(function(){
       data: data
     }).done(function(jsonFromServer){
       console.log('login successfully');
-      console.log(jsonFromServer);
+      console.log(jsonFromServer.token);
       if (jsonFromServer.status) {
         window.localStorage.setItem('jwt', jsonFromServer.token);
         window.location = '/home?token=' + jsonFromServer.token;
         // window.location = '/home?token=';
+        // $.ajax({
+        //   url: "http://localhost:3000/home",
+        //   method: "POST",
+        //   headers: {authorization: 'Bearer ' + jsonFromServer.token}
+        // })
       }
       else {
         window.location = '/';

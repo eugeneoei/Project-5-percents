@@ -10,6 +10,7 @@ $("document").ready(function(){
   $('#myModal').hide();
   $('#thumbnail').on('click', '.viewDropButton', getDropInfo);
   $('.viewPollButton').on('click', getOnePoll);
+  $('#signOut').on('click', logOut);
   $('#anchorDropTab').on('click', function() {
     $('#thumbnail').show();
     $('#oneNail').empty()
@@ -219,10 +220,16 @@ $("document").ready(function(){
       var updatedProgressValue = parseInt($('#'+progressOptionId).val()) + 1
       $('#'+progressOptionId).attr('value', updatedProgressValue)
 
-// document.getElementById(spanOptionId).textContent
       var updatedSpanValue = parseInt(document.getElementById(spanOptionId).textContent) + 1
       document.getElementById(spanOptionId).textContent = updatedSpanValue
     })
+  }
+
+  // sign out button
+  function logOut() {
+    window.localStorage.removeItem('jwt');
+    // window.location = '/'
+    console.log('did you go back to /?');
   }
 
 }); // end of content loaded

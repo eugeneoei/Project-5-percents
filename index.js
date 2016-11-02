@@ -133,6 +133,31 @@ app.get('/home', function (req, res) {
   // console.log('this is result', result);
 });
 
+app.post('/home', function (req, res) {
+  console.log('ajax post to /home');
+  var result = [];
+  db.drop.findAll().then(function(drops) {
+    result.push(drops);
+    // console.log('check drops first', drops);
+    db.poll.findAll({
+      include: [db.option],
+      order: [ [db.option, 'votes', 'DESC'] ]
+    }).then(function(polls) {
+      // console.log('did you survive?');
+      result.push(polls)
+      // console.log('check result array again', result);
+      db.user.find({
+        where: {id: req.user.id}
+      }).then(function(user) {
+        // console.log(user);
+        res.render('user', {result:result, user:user})
+      })
+    })
+  });
+  // console.log('see hereeeeeee', req.user);
+  // console.log('this is result', result);
+});
+
 
 // get all drops
 // this is working
