@@ -6,8 +6,9 @@ $("document").ready(function(){
   // stores token if exist in local storage
   var token = window.localStorage.getItem('jwt');
   // $('#createPoll').hide();
-  $('#createOption').hide();
+  // $('#createOption').hide();
   $('#myModal').hide();
+  // $('#addOption').hide();
   $('#thumbnail').on('click', '.viewDropButton', getDropInfo);
   $('.viewPollButton').on('click', getOnePoll);
   $('#signOut').on('click', logOut);
@@ -59,7 +60,7 @@ $("document").ready(function(){
   $('form#createOptionForm').submit(function(event) {
     event.preventDefault();
 
-    // console.log("create option form submitted");
+    console.log("create option form submitted");
 
     var data = {pollId: $("#pollId").val(),
                 imageUrl: $("#imageUrl").val(),
@@ -171,6 +172,7 @@ $("document").ready(function(){
     console.log('view all options button click');
     var pollID = event.currentTarget.value;
     $('#polls').hide();
+    $('#addOption').show();
 
     $.ajax({
       url: "http://localhost:3000/polls/" + pollID,
@@ -179,10 +181,8 @@ $("document").ready(function(){
     }).done(function(dataFromServer) {
       console.log(dataFromServer);
 
-
       for (var i = 0; i < dataFromServer.length; i++) {
         $('#oneNail').append(
-
           '<div class="card col-sm-4 col-md-4">' +
             '<img class="card-img-top image" src="' + dataFromServer[i].image_url + '" alt="Card image cap">' +
             '<div class="card-block">' +
@@ -193,6 +193,28 @@ $("document").ready(function(){
           '</div>'
         )
       }
+
+      // for (var i = 0; i < dataFromServer.length; i++) {
+      //   $('#oneNail').append(
+      //     '<div class="card card-outline-primary text-xs-center col-sm-4 col-md-4">' +
+      //     '<img class="card-img-top image" src="' + dataFromServer[i].image_url + '" alt="Card image cap">' +
+      //     '<div class="card-block">' +
+      //     '<h4 class="card-title">' + dataFromServer[i].title + '</h4>' +
+      //     '<button id="voteButton' + dataFromServer[i].id + '" type="button" class="btn btn-secondary voteButton" value="' + dataFromServer[i].id + '">Vote</button>' +
+      //     '<input id="hiddenVote' + dataFromServer[i].id + '" type="hidden" value="' + dataFromServer[i].votes + '">' +
+      //     '</div>' +
+      //     '</div>'
+      //   )
+      // }
+
+      $('#oneNail').append(
+        '<div class="card col-sm-4 col-md-4">' +
+          '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#addOption' + dataFromServer[0].pollId + '" >ADD AN OPTION</button>' +
+          // '<button id="addOptionButton" type="button" class="btn btn-secondary data-toggle="modal" data-target="#addOption">Add Option</button>' +
+        '</div>'
+      )
+
+
 
     }).fail(function() {
       // console.log('join drop failed');

@@ -170,7 +170,7 @@
 
     <div class="row" id='pmtForm'></div>
 
-    <!-- Modal -->
+    <!-- Modal For payment -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -189,20 +189,42 @@
       </div>
     </div>
 
-
-
-
-    <div id="createOption">
-      <form id="createOptionForm">
-        <input id="pollId" type="hidden" name="pollId">
-        <input id="imageUrl" type="text" name="imageUrl" placeholder="Share an Image">
-        <input id="pdtTitle" type="text" name="pdtTitle" placeholder="Title">
-        <textarea id="pdtDescription" name="pdtDescription" placeholder="Tell us more about this product!"></textarea>
-        <input id="pdtRetailPrice" type="text" name="pdtRetailPrice" placeholder="Product\'s current retail price">
-        <input id="pdtCode" type="text" name="pdtCode" placeholder="Product code">
-        <button type="submit">Create!</button>
-      </form>
+    <!-- Modal For option -->
+    <% for (var m = 0; m < result[1].length; m++) { %>
+      <% var pollId = result[1][m].id %>
+    <div class="modal fade" id="addOption<%= pollId %>" tabindex="-1" role="dialog" aria-labelledby="addOption<%= pollId %>Label">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="addOption<%= pollId %>Label">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            <div id="createOption">
+              <form id="createOptionForm">
+                <input id="pollId" type="hidden" name="pollId" value='<%= pollId %>'>
+                <input id="imageUrl" type="text" name="imageUrl" placeholder="Share an Image">
+                <input id="pdtTitle" type="text" name="pdtTitle" placeholder="Title">
+                <textarea id="pdtDescription" name="pdtDescription" placeholder="Tell us more about this product!"></textarea>
+                <input id="pdtRetailPrice" type="number" name="pdtRetailPrice" placeholder="Product\'s current retail price">
+                <input id="pdtCode" type="text" name="pdtCode" placeholder="Product code">
+                <button type="submit">Create!</button>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
     </div>
+    <% } %>
+
+
+
+
+
 
 
 
