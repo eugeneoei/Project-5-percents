@@ -14,7 +14,9 @@ $("document").ready(function(){
   $('#signOut').on('click', logOut);
   $('#anchorDropTab').on('click', function() {
     $('#thumbnail').show();
-    $('#oneNail').empty()
+    $('#oneNail').empty();
+    $('#polls').hide();
+
   });
   $('#anchorPollTab').on('click', function() {
     $('#polls').show();
@@ -65,12 +67,38 @@ $("document").ready(function(){
     var data = {pollId: $("#pollId").val(),
                 imageUrl: $("#imageUrl").val(),
                 pdtTitle: $("#pdtTitle").val(),
-                pdttDescription: $("#pdtDescription").val(),
+                pdtDescription: $("#pdtDescription").val(),
                 pdtRetailPrice: $("#pdtRetailPrice").val(),
                 pdtCode: $("#pdtCode").val()};
     // send an ajax POST request
     $.ajax({
       url: "http://localhost:3000/options",
+      method: "POST",
+      headers: {authorization: 'Bearer ' + token},
+      data: data
+    }).done(function(jsonFromServer){
+      if (jsonFromServer.status) {
+        window.location = '/home?token=' + token;
+      }
+    }).fail(function() {
+      window.location = '/';
+    });
+  });
+
+  // create drop form
+  $('form#createDropForm').submit(function(event) {
+    event.preventDefault();
+
+    console.log("drop form submitted");
+
+    var data = {dropImageUrl: $("#dropImageUrl").val(),
+                dropPdtCode: $("#dropPdtCode").val(),
+                dropPdtDescription: $("#dropPdtDescription").val(),
+                dropDiscPrice: $("#dropDiscPrice").val(),
+                dropPdtCategory: $("#dropPdtCategory").val()};
+    // send an ajax POST request
+    $.ajax({
+      url: "http://localhost:3000/drops",
       method: "POST",
       headers: {authorization: 'Bearer ' + token},
       data: data

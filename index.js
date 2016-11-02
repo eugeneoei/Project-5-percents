@@ -133,30 +133,6 @@ app.get('/home', function (req, res) {
   // console.log('this is result', result);
 });
 
-app.post('/home', function (req, res) {
-  console.log('ajax post to /home');
-  var result = [];
-  db.drop.findAll().then(function(drops) {
-    result.push(drops);
-    // console.log('check drops first', drops);
-    db.poll.findAll({
-      include: [db.option],
-      order: [ [db.option, 'votes', 'DESC'] ]
-    }).then(function(polls) {
-      // console.log('did you survive?');
-      result.push(polls)
-      // console.log('check result array again', result);
-      db.user.find({
-        where: {id: req.user.id}
-      }).then(function(user) {
-        // console.log(user);
-        res.render('user', {result:result, user:user})
-      })
-    })
-  });
-  // console.log('see hereeeeeee', req.user);
-  // console.log('this is result', result);
-});
 
 
 // get all drops
@@ -175,6 +151,24 @@ app.get('/drops/:id', function (req, res) {
     res.json({drop: drop})
   })
 });
+
+// create new drop
+app.post('/drops', function (req,res) {
+  db.user.findOne({
+    where:{id: req.user.id}
+  }).then(function(user) {
+    user.createDrop({
+        image_url: req.body.dropImageUrl,
+        product_code: req.body.dropPdtCode,
+        product_description: req.body.dropPdtDescription,
+        product_discount_price: req.body.dropDiscPrice,
+        product_category: req.body.dropPdtCategory
+    }).then(function() {
+      res.json({status:true})
+    })
+  });
+});
+
 
 // user joins drop
 // should populate dropsUsers table
