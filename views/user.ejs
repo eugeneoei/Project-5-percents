@@ -20,6 +20,90 @@
 
     <h1>this is user's home page where user can view drops, create polls and add options</h1>
 
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item">
+        <a id="anchorTab" class="nav-link" data-toggle="tab" href="#drops" role="tab">Drops</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#polls" role="tab">Polls</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#messages" role="tab">Messages</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#settings" role="tab">Settings</a>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="drops" role="tabpanel">
+        <div class="container">
+          <div class="row" id="thumbnail">
+            <% for (var i = 0; i < result[0].length; i++) { %>
+              <% var id = result[0][i].id %>
+              <% var image_url = result[0][i].image_url %>
+              <% var product_code = result[0][i].product_code %>
+              <% var product_description = result[0][i].product_description %>
+              <% var product_discount_price = result[0][i].product_category %>
+              <% var product_category = result[0][i].product_category %>
+              <div class="card col-md-4 col-sm-12 col-xs-12">
+                <img class="card-img-top image" src="<%= image_url %>" alt="Card image cap">
+                <div class="card-block">
+                  <h4 class="card-title"><%= product_category %></h4>
+                  <p class="card-text"><%= product_description %></p>
+                  <button type="button" class="btn btn-default viewDropButton" value="<%= id %>">Vew Drop</button>
+                </div>
+              </div>
+            <% }; %>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane" id="polls" role="tabpanel">
+        <% for (var j = 0; j < result[1].length; j++) { %>
+          <% var product_category = result[1][j].poll_category %>
+          <% var image = result[1][0].options[0].image_url %>
+        <div class="container">
+         <!-- <div class="row"> -->
+
+             <div class="col-md-4">
+               <div class='row'>
+                 <div class="col-md-12">
+                   <div class="col-md-6">
+                     <%= product_category %>
+                  </div>
+                   <label for="">posted by which user</label>
+                 </div>
+               </div>
+               <div class='row'>
+                 <div class="col-md-12">
+                   <img class="card-img-top image" src="<%= image %>">
+                 </div>
+               </div>
+             </div>
+
+             <div class="col-md-8">
+               <div class="col-md-12">
+                 <% for (var k = 0; k < result[1][j].options.length; k++) { %>
+                   <% var totalVotes = 0 %>
+                   <% var votes = result[1][j].options[k].votes %>
+                   <% totalVotes += votes %>
+                  <div class="col-md-12">
+                    <progress class="progress progress-info" value="<%= votes %>" max="<%= totalVotes %>"></progress>
+                  </div>
+                 <div class="col-md-12">
+                   <h4><%= votes %></h4>
+                 </div>
+                 <% }; %>
+               </div>
+             </div>
+           <!-- </div> -->
+         </div>
+         <% }; %>
+      </div>
+      <!-- <div class="tab-pane" id="messages" role="tabpanel">...</div>
+      <div class="tab-pane" id="settings" role="tabpanel">...</div> -->
+    </div>
+
     <div class='container'>
       <div class='row'>
         <button id='pollButton' type="button" class="btn btn-default">Polls</button>
@@ -27,26 +111,7 @@
       </div>
     </div>
 
-    <div class="container">
-      <div class="row" id="thumbnail">
-        <% drops.forEach(function(item) { %>
-          <% var id = item.id %>
-          <% var image_url = item.image_url %>
-          <% var product_code = item.product_code %>
-          <% var product_description = item.product_description %>
-          <% var product_discount_price = item.product_category %>
-          <% var product_category = item.product_category %>
-          <div class="card col-md-4 col-sm-12 col-xs-12">
-            <img class="card-img-top image" src="<%= image_url %>" alt="Card image cap">
-            <div class="card-block">
-              <h4 class="card-title"><%= product_category %></h4>
-              <p class="card-text"><%= product_description %></p>
-              <button type="button" class="btn btn-default viewDropButton" value="<%= id %>">Vew Drop</button>
-            </div>
-          </div>
-        <% }); %>
-      </div>
-    </div>
+
 
     <div class='container'>
       <div class="row" id='oneNail'></div>

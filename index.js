@@ -108,16 +108,24 @@ app.use(function (err, req, res, next) {
 });
 
 
-// show all drops when user looged in
+// get all drops and polls when user looged in
 app.get('/home', function (req, res) {
-  console.log('/drops route, get all drops');
-  // console.log('did user get redirected?', req.user);
-  // query to db to show all drops once user has logged in
+  var result = [];
   db.drop.findAll().then(function(drops) {
-    // console.log(drops);
-    res.render("user", {drops: drops});
-  })
-  // console.log('user.ejs should be rendered');
+    result.push(drops);
+    console.log('check drops first', drops);
+    // res.json(drops);
+    db.poll.findAll({
+      include: [db.option]
+    }).then(function(polls) {
+      console.log('did you survive?');
+      result.push(polls)
+      console.log('check result array again', result);
+    }).then(function() {
+      res.render('user', {result:result})
+    })
+  });
+  console.log('this is result', result);
 });
 
 

@@ -1,6 +1,8 @@
 $("document").ready(function(){
   console.log("loaded");
 
+  // console.log(result);
+
   // stores token if exist in local storage
   var token = window.localStorage.getItem('jwt');
   $('#createPoll').hide();
@@ -8,7 +10,13 @@ $("document").ready(function(){
   $('#myModal').hide();
   $('#thumbnail').on('click', '.viewDropButton', getDropInfo);
   $('#pollButton').on('click', getAllPolls);
-  $('#dropButton').on('click', getAllDrops)
+  $('#dropButton').on('click', getAllDrops);
+  $('#anchorTab').on('click', function() {
+    $('#thumbnail').show();
+  })
+
+
+
   $(document).on('click', '.joinDropButton', submitUserDrop);
 
 
@@ -124,38 +132,6 @@ $("document").ready(function(){
     }).done(function(dataFromServer) {
       console.log('all polls including options returned from server');
       console.log(dataFromServer);
-      // $('#oneNail').hide()
-
-      $('#allPolls').append(
-
-
-      )
-      // how to dynamically append dataFromServer in
-      // <div class="row">
-      //   <div class="col-md-4">
-      //     <div class="col-md-12">
-      //       <div class="col-md-6">
-      //         here is where the name of the category of product is and where
-      //         poll.poll_category
-      //       </div>
-      //       <label for="">posted by which user</label>
-      //     </div>
-      //     <div class="col-md-12">
-      //       this is where image of most voted product should appear
-      //     </div>
-      //   </div>
-      //   <div class="col-md-8">
-      //     <div class="col-md-12">
-      //       top voted option here
-      //     </div>
-      //     <div class="col-md-12">
-      //       second voted option here
-      //     </div>
-      //     <div class="col-md-12">
-      //       third voted option here
-      //     </div>
-      //   </div>
-      // </div>
 
     }).fail(function() {
       console.log('failed to get poll');
