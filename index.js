@@ -131,11 +131,11 @@ app.get('/home', function (req, res) {
 
 // get all drops
 // this is working
-app.get('/drops', function(req,res) {
-  db.drop.findAll().then(function(drops) {
-    res.json(drops);
-  });
-});
+// app.get('/drops', function(req,res) {
+//   db.drop.findAll().then(function(drops) {
+//     res.json(drops);
+//   });
+// });
 
 // get one drop
 app.get('/drops/:id', function (req, res) {

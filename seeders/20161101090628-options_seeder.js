@@ -11,6 +11,7 @@ module.exports = {
             pollId: 1,
             votes: 20,
             userId: 2,
+            title: 'THIS IS A TITLE',
             createdAt: new Date(),
             updatedAt: new Date()
         },
@@ -23,6 +24,7 @@ module.exports = {
             pollId: 1,
             votes: 60,
             userId: 2,
+            title: 'THIS IS A TITLE',
             createdAt: new Date(),
             updatedAt: new Date()
         },
@@ -35,6 +37,7 @@ module.exports = {
             pollId: 1,
             votes: 100,
             userId: 2,
+            title: 'THIS IS A TITLE',
             createdAt: new Date(),
             updatedAt: new Date()
         },
@@ -47,6 +50,7 @@ module.exports = {
             pollId: 2,
             votes: 20,
             userId: 2,
+            title: 'THIS IS A TITLE',
             createdAt: new Date(),
             updatedAt: new Date()
         },
@@ -59,6 +63,7 @@ module.exports = {
             pollId: 2,
             votes: 60,
             userId: 2,
+            title: 'THIS IS A TITLE',
             createdAt: new Date(),
             updatedAt: new Date()
         },
@@ -71,6 +76,7 @@ module.exports = {
             pollId: 2,
             votes: 100,
             userId: 2,
+            title: 'THIS IS A TITLE',
             createdAt: new Date(),
             updatedAt: new Date()
         }

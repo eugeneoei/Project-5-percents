@@ -58,6 +58,7 @@
           </div>
         </div>
       </div>
+
       <div class="tab-pane" id="polls" role="tabpanel">
         <% for (var j = 0; j < result[1].length; j++) { %>
           <% var product_category = result[1][j].poll_category %>
@@ -81,22 +82,29 @@
                </div>
              </div>
 
+             <% var totalVotes = 0 %>
+             <% for (var l = 0; l < result[1][j].options.length; l++) { %>
+               <% var votesAdd = result[1][j].options[l].votes %>
+               <% totalVotes += votesAdd %>
+               <% } %>
              <div class="col-md-8">
-               <div class="col-md-12">
-                 <% for (var k = 0; k < result[1][j].options.length; k++) { %>
-                   <% var totalVotes = 0 %>
-                   <% var votes = result[1][j].options[k].votes %>
-                   <% totalVotes += votes %>
-                  <div class="col-md-12">
-                    <progress class="progress progress-info" value="<%= votes %>" max="<%= totalVotes %>"></progress>
+
+               <% for (var k = 0; k < result[1][j].options.length; k++) { %>
+                 <% var votes = result[1][j].options[k].votes %>
+                 <% var title = result[1][j].options[k].title %>
+                <div class="col-md-12">
+                  <div class="col-md-2">
+                    <span><%= title %></span>
                   </div>
-                 <div class="col-md-12">
-                   <h4><%= votes %></h4>
-                 </div>
-                 <% }; %>
-               </div>
-             </div>
-           <!-- </div> -->
+                  <div class="col-md-2 offset-md-8">
+                    <span><%= votes %></span>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <progress class="progress progress-info" value="<%= votes %>" max="<%= totalVotes %>"></progress>
+                </div>
+             <% }; %>
+           </div>
          </div>
          <% }; %>
       </div>
