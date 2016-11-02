@@ -124,12 +124,12 @@ app.get('/home', function (req, res) {
       db.user.find({
         where: {id: req.user.id}
       }).then(function(user) {
-        console.log(user);
+        // console.log(user);
         res.render('user', {result:result, user:user})
       })
     })
   });
-  console.log('see hereeeeeee', req.user);
+  // console.log('see hereeeeeee', req.user);
   // console.log('this is result', result);
 });
 
@@ -216,7 +216,7 @@ app.post('/options', function (req, res) {
   db.poll.findOne({
     where:{id: req.body.pollId}
   }).then(function(poll) {
-    console.log(poll);
+    // console.log(poll);
     poll.createOption({
       userId: req.user.id,
       image_url: req.body.imageUrl,
@@ -226,7 +226,7 @@ app.post('/options', function (req, res) {
       product_code: req.body.pdtCode
     }).then(function(data) {
       res.json({data:data, status: true});
-      console.log('create option success', data);
+      // console.log('create option success', data);
       // res.redirect('/polls');
     });
   });
@@ -246,17 +246,16 @@ app.get('/options/:id/edit', function (req,res) {
 
 // update option
 app.put('/options/:id', function (req, res) {
+  var oldVotes = parseInt(req.body.votes)
   db.option.update({
-    image_url: req.body.imageUrl,
-    product_description: req.body.pdtDescription,
-    product_retail_price: req.body.pdtRetailPrice,
-    product_code: req.body.pdtCode
+    votes: oldVotes + 1
   }, {
     where: {
       id: req.params.id,
-      userId: req.user.id
     }
   }).then(function(data) {
+    console.log(data);
+    console.log('see here for the updated votes', data.votes);
     res.json(data)
   })
 });

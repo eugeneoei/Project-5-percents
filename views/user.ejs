@@ -110,16 +110,17 @@
                <% for (var k = 0; k < 3; k++) { %>
                  <% var votes = result[1][j].options[k].votes %>
                  <% var title = result[1][j].options[k].title %>
+                 <% var optionId = result[1][j].options[k].id %>
                 <div class="col-md-12">
                   <div class="col-md-4">
                     <span><%= title %></span>
                   </div>
                   <div class="col-md-2 offset-md-6">
-                    <span><%= votes %></span>
+                    <span id="spanOptionId<%= optionId %>"><%= votes %></span>
                   </div>
                 </div>
                 <div class="col-md-12">
-                  <progress class="progress progress-info" value="<%= votes %>" max="<%= totalVotes %>"></progress>
+                  <progress id="progressOptionId<%= optionId %>" class="progress progress-info" value="<%= votes %>" max="<%= totalVotes %>"></progress>
                 </div>
              <% }; %>
              <button type="button" class="btn btn-secondary viewPollButton" value='<%= pollId %>'>View all options</button>

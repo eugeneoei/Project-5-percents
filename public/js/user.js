@@ -20,6 +20,9 @@ $("document").ready(function(){
   });
 
   $(document).on('click', '.joinDropButton', submitUserDrop);
+  $(document).on('click', '.voteButton', voteCount);
+
+
 
 
   $('#pollButton').on('click', getAllPolls);
@@ -183,7 +186,8 @@ $("document").ready(function(){
             '<img class="card-img-top image" src="' + dataFromServer[i].image_url + '" alt="Card image cap">' +
             '<div class="card-block">' +
               '<h4 class="card-title">' + dataFromServer[i].title + '</h4>' +
-              '<a href="#" class="btn btn-primary">Vote</a>' +
+              '<button id="voteButton' + dataFromServer[i].id + '" type="button" class="btn btn-secondary voteButton" value="' + dataFromServer[i].id + '">Vote</button>' +
+              '<input id="hiddenVote' + dataFromServer[i].id + '" type="hidden" value="' + dataFromServer[i].votes + '">' +
             '</div>' +
           '</div>'
         )
@@ -192,7 +196,33 @@ $("document").ready(function(){
     }).fail(function() {
       // console.log('join drop failed');
     });
+  }
 
+  // event handler for vote button
+  function voteCount(event) {
+    console.log('view all options button click');
+    var hiddenVoteID = 'hiddenVote' + event.currentTarget.value
+    var buttonID = 'voteButton' + event.currentTarget.value
+    var optionID = event.currentTarget.value;
+    var progressOptionId = 'progressOptionId' + event.currentTarget.value
+    var spanOptionId = 'spanOptionId' + event.currentTarget.value
+    var data = {votes: $("#" + hiddenVoteID).val()}
+    document.getElementById(buttonID).textContent = 'Voted!'
+    // send an ajax request and update vote count in database
+    $.ajax({
+      url: "http://localhost:3000/options/" + optionID,
+      method: "PUT",
+      data: data,
+      headers: {authorization: 'Bearer ' + token}
+    }).done(function(dataFromServer) {
+      console.log(dataFromServer);
+      var updatedProgressValue = parseInt($('#'+progressOptionId).val()) + 1
+      $('#'+progressOptionId).attr('value', updatedProgressValue)
+
+// document.getElementById(spanOptionId).textContent
+      var updatedSpanValue = parseInt(document.getElementById(spanOptionId).textContent) + 1
+      document.getElementById(spanOptionId).textContent = updatedSpanValue
+    })
   }
 
 }); // end of content loaded
