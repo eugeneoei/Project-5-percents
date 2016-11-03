@@ -1,6 +1,19 @@
 $("document").ready(function(){
   console.log("loaded");
 
+  $('#signup').hide();
+  $('#login').hide();
+
+
+  $('#log-in-div').on('click', function() {
+    $('#login').show();
+    $('.authButtons').hide();
+  })
+
+  $('#sign-up-div').on('click', function() {
+    $('#signup').show();
+    $('.authButtons').hide();
+  })
 
   // signup form
   $('form#signup').submit(function(event) {

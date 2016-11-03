@@ -132,7 +132,7 @@ $("document").ready(function(){
           '<div class="card-block">' +
             '<h4 class="card-title">' + dataFromServer.drop.product_category + '</h4>' +
             '<p class="card-text">' + dataFromServer.drop.product_description + '</p>' +
-            '<button type="button" class="btn btn-default joinDropButton" value="' + dataFromServer.drop.id + '" data-toggle="modal" data-target="#myModal">Join Drop</button>' +
+            '<button type="button" class="btn btn-default joinDropButton" value="' + dataFromServer.drop.id + '" data-toggle="modal" data-target="#checkout">Join Drop</button>' +
             '<p>7days left!</p>' +
           '</div>' +
         '</div>'
@@ -336,6 +336,7 @@ $("document").ready(function(){
     })
   }
 
+  // update drop
   function updateDrop(event) {
     var dropID = event.currentTarget.value;
     var data = {editImageUrl: $('#editImageUrl' + dropID).val(),
@@ -344,7 +345,6 @@ $("document").ready(function(){
                 editPdtDescription: $('#editPdtDescription' + dropID).val(),
                 editPdtDiscPrice: $('#editPdtDiscPrice' + dropID).val()
                 }
-
     $.ajax({
       url: "http://localhost:3000/drops/" + dropID,
       method: "PUT",
@@ -363,5 +363,57 @@ $("document").ready(function(){
     // window.location = '/'
     console.log('did you go back to /?');
   }
+
+
+  // stripe js components
+  Stripe.setPublishableKey(process.env.PUBLIC_KEY);
+
+  var $btn = $('#submit');
+  $btn.on('click', function() {
+      $btn.prop('disabled', true);
+      $btn.button('progress');
+
+      var cardNum = $('#card-num').val();
+      var cardExp = $('#card-exp').val().split('/');
+      var cardCVC = $('#card-cvc').val();
+
+      // First submit the card information to Stripe to get back a token
+      Stripe.card.createToken({
+          number: cardNum,
+          exp_month: cardExp[0],
+          exp_year: cardExp[1],
+          cvc: cardCVC
+      }, function(status, response) {
+          var $form = $('#form');
+          var token = response.id;
+
+          // Save the token into a hidden input field
+          $form.append($('<input id="stripeToken" type="hidden" name="stripeToken" />').val(token));
+          var data = $('#stripeToken').val()
+          // Now submit the form to our server so it can make the charge against the token
+          $form.get(0).submit(function() {
+            $.ajax({
+              url: "http://localhost:3000/charge",
+              method: "POST",
+              data: data,
+              headers: {authorization: 'Bearer ' + token}
+            }).done(function(jsonFromServer) {
+              if (jsonFromServer.status) {
+                console.log('hello stripe');
+                window.location = '/home?token=' + token;
+              }
+            })
+          });
+
+          // All done!
+          $btn.addClass('btn-success').removeClass('btn-primary');
+          $btn.button('success');
+          setTimeout(function() {
+              $('#checkout').modal('hide');
+          }, 250);
+      });
+
+      return false;
+  });
 
 }); // end of content loaded

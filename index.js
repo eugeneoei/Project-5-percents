@@ -6,6 +6,7 @@ var morgan = require('morgan')
 var db = require('./models');
 var expressJWT = require('express-jwt');
 var jwt = require('jsonwebtoken');
+var stripe = require('stripe')(process.env.TEST_KEY)
 var app = express();
 
 var secret = "mysupersecretpassword";
@@ -111,7 +112,9 @@ app.use(function (err, req, res, next) {
 // get all drops and polls when user looged in
 app.get('/home', function (req, res) {
   var result = [];
-  db.drop.findAll().then(function(drops) {
+  db.drop.findAll({
+    order: [['id', 'ASC']]
+  }).then(function(drops) {
     result.push(drops);
     // console.log('check drops first', drops);
     db.poll.findAll({
@@ -296,6 +299,29 @@ app.put('/options/:id', function (req, res) {
     console.log('see here for the updated votes', data.votes);
     res.json(data)
   })
+});
+
+// stripe payment
+app.post('/charge', function(req, res) {
+    console.log('stripe route success');
+    var stripeToken = req.body.stripeToken;
+    var amount = 1000;
+
+    stripe.charges.create({
+        card: stripeToken,
+        currency: 'usd',
+        amount: amount
+    // },
+    // function(err, charge) {
+    //     if (err) {
+    //         res.send(500, err);
+    //     } else {
+    //         res.send(204);
+    //     }
+    }).then(function(){
+      console.log('stripe success');
+      res.json({status:true})
+    })
 });
 
 

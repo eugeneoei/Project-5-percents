@@ -8,27 +8,90 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato|Pacifico|Roboto+Condensed" rel="stylesheet">
     <script type="text/javascript" src="../js/home.js"></script>
     <link rel="stylesheet" href="../css/style.css">
 
   </head>
-  <body>
+  <body id='home'>
 
-    <h1>this is the home page</h1>
+    <div class='container' id='background'>
+      <!-- <div class='box col-md-4' id='boxOne'></div> -->
+      <div class='box' id='boxTwo'></div>
+      <div class='box' id='boxThree'></div>
+      <div class='box' id='boxFour'></div>
+    </div>
 
-    <form id='signup'>
-      <input id='signupFirstName' type="text" name="firstName" placeholder="First Name">
-      <input id='signupLastName' type="text" name="lastName" placeholder="Last Name">
-      <input id='signupEmail' type="text" name="email" placeholder="Email">
-      <input id='signupPassword' type="password" name="password" placeholder="Password">
-      <button type="submit">Sign Up!</button>
-    </form>
+    <div class='container' id='homeContainer'>
+      <div class="row">
+        <div id='logo' class='col-md-12'>Per<span style="font-size: 120px;">¢</span></div>
+      </div>
+      <div class="row" id='log-in-div'>
+        <div class="col-md-4 offset-md-4 authButtons">
+          Log In
+        </div>
+      </div>
+      <div class="row" id='sign-up-div'>
+        <div class="col-md-4 offset-md-4 authButtons">
+          Sign Up
+        </div>
+      </div>
 
-    <form id='login'>
-      <input id='loginEmail' type="text" name="email" placeholder="Email">
-      <input id='loginPassword' type="password" name="password" placeholder="Password">
-      <button type="submit">Log In!</button>
-    </form>
+      <div class='row'>
+        <form id='signup'>
+          <div class="form-group">
+            <div class='col-md-12'>
+              <small class='small'>First Name</small>
+              <input id='signupFirstName' class='form-input' type="text" name="firstName" placeholder="You First Name Here">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class='col-md-12'>
+              <small class='small'>Last Name</small>
+              <input id='signupLastName' class='form-input' type="text" name="lastName" placeholder="Your Last Name Here">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class='col-md-12'>
+              <small class='small'>Email</small>
+              <input id='signupEmail' class='form-input' type="email" name="email" placeholder="Your Email Here">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class='col-md-12'>
+              <small class='small'>Password</small>
+              <input id='signupPassword' class='form-input' type="password" name="password" placeholder="Your Password Here">
+            </div>
+          </div>
+          <div class='col-md-12'>
+            <button class='form-button' type="submit">Sign Up!</button>
+          </div>
+        </form>
+      </div>
+
+      <div class='row'>
+        <form id='login'>
+          <div class="form-group">
+            <div class='col-md-12'>
+              <small class='small'>Email</small>
+              <input id='loginEmail' class='form-input' type="text" name="email" placeholder="Email">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class='col-md-12'>
+              <small class='small'>Password</small>
+              <input id='loginPassword' class='form-input' type="password" name="password" placeholder="Password">
+            </div>
+          </div>
+          <div class='col-md-12'>
+            <button class='form-button' type="submit">Log In!</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- <div class='box' id='boxTwo'></div> -->
 
   </body>
 </html>

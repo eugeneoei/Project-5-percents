@@ -1,3 +1,132 @@
+/*.body {
+  position: relative;
+}*/
+
 .image {
   width:100%;
 }
+
+.modal-dialog {
+    width: 350px;
+}
+.modal-header {
+    border: none;
+    padding: 0;
+}
+.modal-content {
+    padding: 10px;
+}
+
+/*#home {
+  background-color: #062f4f;
+}*/
+
+#logo {
+  font-family: 'Pacifico', cursive;
+  font-size: 70px;
+  color: black;
+  text-align: center;
+}
+
+#homeContainer {
+  width: 50%;
+  /*margin-top: 30px;*/
+}
+
+
+.authButtons {
+  font-family: 'Roboto Condensed', sans-serif;
+  border: 2px solid black;
+  margin-top: 20px;
+  text-align: center;
+  line-height: 40px;
+  height: 40px;
+}
+
+.authButtons:hover {
+  background-color: #6d7993;
+  border: none;
+  color: white;
+}
+
+.form-input {
+  border: none;
+  outline:none;
+  padding: 12px;
+  font-family: 'Roboto Condensed', sans-serif;
+  border-bottom: 1px solid #76323f;
+  width: 100%;
+  background: transparent;
+}
+
+.small {
+  display: block;
+  padding:12px;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.form-button {
+  background-color: #062f4f;
+  color: white;
+  font-family: 'Roboto Condensed', sans-serif;
+  margin-top: 20px;
+  width: 30%;
+  padding: 12px;
+  /*text-align: center;*/
+}
+
+.box {
+  width: 500px;
+  height: 300px;
+  /*overflow: hidden;*/
+  -ms-transform: rotate(-45deg); /* IE 9 */
+  -webkit-transform: rotate(-45deg); /* Chrome, Safari, Opera */
+  transform: rotate(-45deg);
+
+}
+
+#boxOne {
+  background-color: #4abdac;
+  position: absolute;
+  -ms-transform: rotate(0deg); /* IE 9 */
+  -webkit-transform: rotate(0deg); /* Chrome, Safari, Opera */
+  transform: rotate(0deg);
+}
+
+#boxTwo {
+  background-color: #fc4a1a;
+  position: absolute;
+}
+
+#boxThree {
+  background-color: #f7b733;
+  position: absolute;
+  left:400px;
+}
+
+#boxFour {
+  background-color: #4abdac;
+  position: absolute;
+  left:700px;
+}
+
+#background {
+  z-index: -1;
+  margin-top: 120px;
+}
+
+input[type=text]:focus {
+  background: transparent;
+}
+
+
+
+
+/*input:focus {
+  border-bottom: 1px solid #76323f;
+}*/
+
+/*#spanC {
+  font-size: 70px;
+}*/
+/*font-family: 'Roboto Condensed', sans-serif;*/
