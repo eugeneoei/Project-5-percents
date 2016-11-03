@@ -10,6 +10,7 @@ $("document").ready(function(){
   $('#myModal').hide();
   // $('#addOption').hide();
   $('#thumbnail').on('click', '.viewDropButton', getDropInfo);
+  $('#thumbnail').on('click', '.editDropButton', showEditDrop);
   $('.viewPollButton').on('click', getOnePoll);
   $('#signOut').on('click', logOut);
   $('#anchorDropTab').on('click', function() {
@@ -24,6 +25,7 @@ $("document").ready(function(){
   });
 
   $(document).on('click', '.joinDropButton', submitUserDrop);
+  $(document).on('click', '.updateDropButton', updateDrop);
   $(document).on('click', '.voteButton', voteCount);
 
 
@@ -272,6 +274,86 @@ $("document").ready(function(){
 
       var updatedSpanValue = parseInt(document.getElementById(spanOptionId).textContent) + 1
       document.getElementById(spanOptionId).textContent = updatedSpanValue
+    })
+  }
+
+  // get drop to edit
+  function showEditDrop(event) {
+    var dropID = event.currentTarget.value;
+    $('#thumbnail').hide(); // hides all drops
+    $('#oneNail').show()
+
+    $.ajax({
+      url: "http://localhost:3000/drops/" + dropID,
+      method: "GET",
+      headers: {authorization: 'Bearer ' + token},
+    }).done(function(dataFromServer) {
+      // console.log(dataFromServer);
+      // dataFromServer.drop.product_discount_price
+      $('#oneNail').append (
+        '<div class="container">' +
+          '<div class="col-md-4"></div>' +
+          '<div class="col-md-4">' +
+            '<div class="col-md-12">' +
+              '<span class="tag tag-default">Image Url</span>' +
+            '</div>' +
+            '<div class="col-md-12">' +
+              '<input id="editImageUrl' + dataFromServer.drop.id + '" type="text" value="' + dataFromServer.drop.image_url + '">' +
+            '</div>' +
+            '<div class="col-md-12">' +
+              '<span class="tag tag-default">Product Category</span>' +
+            '</div>' +
+            '<div class="col-md-12">' +
+              '<input id="editPdtCat' + dataFromServer.drop.id + '" type="text" value="' + dataFromServer.drop.product_category + '">' +
+            '</div>' +
+            '<div class="col-md-12">' +
+              '<span class="tag tag-default">Product Code</span>' +
+            '</div>' +
+            '<div class="col-md-12">' +
+              '<input id="editPdtCode' + dataFromServer.drop.id + '" type="text" value="' + dataFromServer.drop.product_code + '">' +
+            '</div>' +
+            '<div class="col-md-12">' +
+              '<span class="tag tag-default">Product Desription</span>' +
+            '</div>' +
+            '<div class="col-md-12">' +
+              '<textarea id="editPdtDescription' + dataFromServer.drop.id + '">' + dataFromServer.drop.product_description + '</textarea>' +
+            '</div>' +
+            '<div class="col-md-12">' +
+              '<span class="tag tag-default">Product Discount Price</span>' +
+            '</div>' +
+            '<div class="col-md-12">' +
+              '<input id="editPdtDiscPrice' + dataFromServer.drop.id + '" type="text" value="' + dataFromServer.drop.product_discount_price + '">' +
+            '</div>' +
+            '<div class="col-md-12">' +
+              '<button type="button" class="btn btn-secondary updateDropButton" value="' + dataFromServer.drop.id + '">Update</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="col-md-4"></div>' +
+        '</div>'
+      )
+    }).fail(function() {
+      // console.log("failed to get drop from server");
+    })
+  }
+
+  function updateDrop(event) {
+    var dropID = event.currentTarget.value;
+    var data = {editImageUrl: $('#editImageUrl' + dropID).val(),
+                editPdtCat: $('#editPdtCat' + dropID).val(),
+                editPdtCode: $('#editPdtCode' + dropID).val(),
+                editPdtDescription: $('#editPdtDescription' + dropID).val(),
+                editPdtDiscPrice: $('#editPdtDiscPrice' + dropID).val()
+                }
+
+    $.ajax({
+      url: "http://localhost:3000/drops/" + dropID,
+      method: "PUT",
+      data: data,
+      headers: {authorization: 'Bearer ' + token},
+    }).done(function(jsonFromServer) {
+      if (jsonFromServer.status) {
+        window.location = '/home?token=' + token;
+      }
     })
   }
 

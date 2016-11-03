@@ -169,6 +169,24 @@ app.post('/drops', function (req,res) {
   });
 });
 
+// update drop
+app.put('/drops/:id', function (req,res) {
+  db.drop.update({
+    image_url: req.body.editImageUrl,
+    product_code: req.body.editPdtCode,
+    product_description: req.body.editPdtDescription,
+    product_discount_price: req.body.editPdtDiscPrice,
+    product_category: req.body.editPdtCat
+  }, {
+    where: {
+      id: req.params.id,
+    }
+  }).then(function(data) {
+    console.log('see here for updated drop', data);
+    res.json({status:true})
+  })
+});
+
 
 // user joins drop
 // should populate dropsUsers table

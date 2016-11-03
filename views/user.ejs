@@ -75,6 +75,9 @@
                   <h4 class="card-title"><%= product_category %></h4>
                   <p class="card-text"><%= product_description %></p>
                   <button type="button" class="btn btn-default viewDropButton" value="<%= id %>">Vew Drop</button>
+                  <% if (user.is_admin) { %>
+                  <button type="button" class="btn btn-default editDropButton" value="<%= id %>">Edit Drop</button>
+                  <% } %>
                 </div>
               </div>
             <% }; %>
@@ -167,7 +170,7 @@
 
 
     <div class='container' id='oneNail'>
-      <div class="row" id='oneNail'></div>
+      <!-- <div class="row" id='oneNail'></div> -->
     </div>
 
     <div class='container' id='allPolls'>
