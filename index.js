@@ -264,7 +264,7 @@ app.post('/options', function (req, res) {
       product_description: req.body.pdtDescription,
       product_retail_price: req.body.pdtRetailPrice,
       product_code: req.body.pdtCode,
-      votes: 0
+      votes: 1
     }).then(function(data) {
       res.json({data:data, status: true});
       // console.log('create option success', data);

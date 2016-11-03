@@ -8,6 +8,8 @@ $("document").ready(function(){
   // $('#createPoll').hide();
   // $('#createOption').hide();
   $('#myModal').hide();
+  $('#createOption').hide();
+
   // $('#addOption').hide();
   $('#thumbnail').on('click', '.viewDropButton', getDropInfo);
   $('#thumbnail').on('click', '.editDropButton', showEditDrop);
@@ -17,11 +19,17 @@ $("document").ready(function(){
     $('#thumbnail').show();
     $('#oneNail').empty();
     $('#polls').hide();
-
+    $('#createOptionForm').hide();
   });
   $('#anchorPollTab').on('click', function() {
     $('#polls').show();
     $('#oneNail').empty()
+    $('#createOptionForm').hide();
+  });
+  $('#anchorCreateTab').on('click', function() {
+    $('#polls').hide();
+    // $('#createOption').hide();
+    // $('#createPoll').show()
   });
 
   $(document).on('click', '.joinDropButton', submitUserDrop);
@@ -41,6 +49,8 @@ $("document").ready(function(){
   // create poll form
   $('form#createPollForm').submit(function(event) {
     event.preventDefault();
+    $('#createPoll').hide();
+    $('#createOption').show();
 
     var data = {pollCategory: $("#pollCategory").val()};
     // send an ajax POST request
@@ -51,8 +61,6 @@ $("document").ready(function(){
       data: data,
       headers: {authorization: 'Bearer ' + token},
     }).done(function(jsonFromServer){
-      $('#createPoll').hide();
-      $('#createOption').show();
       $('#pollId').attr('value', jsonFromServer.data.id)
 
     }).fail(function() {
@@ -63,6 +71,7 @@ $("document").ready(function(){
   // create option form
   $('form#createOptionForm').submit(function(event) {
     event.preventDefault();
+    $('#createOption').hide();
 
     console.log("create option form submitted");
 

@@ -20,36 +20,49 @@
   </head>
   <body>
 
-    <h1>this is user's home page where user can view drops, create polls and add options</h1>
+    <!-- <h1>this is user's home page where user can view drops, create polls and add options</h1> -->
+    <div class='container' id='homeContainer'>
+      <div class="row">
+        <div id='logo' class='col-md-12 col-sm-12'>Per<span style="font-size: 120px;">¢</span></div>
+      </div>
+    </div>
 
-    <ul class="nav nav-tabs" role="tablist">
-    <% if (user.is_admin) { %>
-      <li class="nav-item">
-        <a id="anchorDropTab" class="nav-link active" data-toggle="tab" href="#drops" role="tab">Drops</a>
-      </li>
-      <li class="nav-item">
-        <a id="anchorPollTab" class="nav-link" data-toggle="tab" href="#polls" role="tab">Polls</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#createDrop" role="tab">Create Drop</a>
-      </li>
-      <li class="nav-item">
-        <a id="signOut" class="nav-link" href='/' role="tab">Log Out</a>
-      </li>
-    <% } else { %>
-      <li class="nav-item">
-        <a id="anchorDropTab" class="nav-link active" data-toggle="tab" href="#drops" role="tab">Drops</a>
-      </li>
-      <li class="nav-item">
-        <a id="anchorPollTab" class="nav-link" data-toggle="tab" href="#polls" role="tab">Polls</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#createPoll" role="tab">Create Poll</a>
-      </li>
-      <li class="nav-item">
-        <a id="signOut" class="nav-link" href='/' role="tab">Log Out</a>
-      </li>
-    <% } %>
+    <div class="container">
+      <div class='row'>
+        <div class="col-md-12" id="tabs">
+
+          <ul class="nav nav-tabs" role="tablist">
+            <% if (user.is_admin) { %>
+              <li class="nav-item">
+                <a id="anchorDropTab" class="nav-link active tab-link" data-toggle="tab" href="#drops" role="tab">Drops</a>
+              </li>
+              <li class="nav-item">
+                <a id="anchorPollTab" class="nav-link tab-link" data-toggle="tab" href="#polls" role="tab">Polls</a>
+              </li>
+              <li class="nav-item">
+                <a id="anchorCreateTab" class="nav-link tab-link" data-toggle="tab" href="#createDrop" role="tab">Create Drop</a>
+              </li>
+              <li class="nav-item">
+                <a id="signOut" class="nav-link tab-link" href='/' role="tab">Log Out</a>
+              </li>
+              <% } else { %>
+                <li class="nav-item">
+                  <a id="anchorDropTab" class="nav-link active tab-link" data-toggle="tab" href="#drops" role="tab">Drops</a>
+                </li>
+                <li class="nav-item">
+                  <a id="anchorPollTab" class="nav-link tab-link" data-toggle="tab" href="#polls" role="tab">Polls</a>
+                </li>
+                <li class="nav-item">
+                  <a id="anchorCreateTab" class="nav-link tab-link" data-toggle="tab" href="#createPoll" role="tab">Create Poll</a>
+                </li>
+                <li class="nav-item">
+                  <a id="signOut" class="nav-link tab-link" href='/' role="tab">Log Out</a>
+                </li>
+                <% } %>
+              </ul>
+            </div>
+          </div>
+      </div>
 
 
       <!-- <li class="nav-item">
@@ -58,7 +71,6 @@
       <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#settings" role="tab">Settings</a>
       </li> -->
-    </ul>
 
     <div class="tab-content">
       <div class="tab-pane active" id="drops" role="tabpanel">
@@ -71,14 +83,22 @@
               <% var product_description = result[0][i].product_description %>
               <% var product_discount_price = result[0][i].product_category %>
               <% var product_category = result[0][i].product_category %>
-              <div class="card col-md-4 col-sm-12 col-xs-12">
+              <div class="card col-md-4 col-sm-12 col-xs-12 my-card">
                 <img class="card-img-top image" src="<%= image_url %>" alt="Card image cap">
                 <div class="card-block">
-                  <h4 class="card-title"><%= product_category %></h4>
-                  <p class="card-text"><%= product_description %></p>
-                  <button type="button" class="btn btn-default viewDropButton" value="<%= id %>">Vew Drop</button>
+                  <h4 class="card-title font"><%= product_category %></h4>
+                  <p class="card-text font"><%= product_description %></p>
                   <% if (user.is_admin) { %>
-                  <button type="button" class="btn btn-default editDropButton" value="<%= id %>">Edit Drop</button>
+                    <div class='col-md-4 offset-md-1'>
+                      <button type="button" class="btn btn-default viewDropButton font card-button" value="<%= id %>">View Drop</button>
+                    </div>
+                    <div class='col-md-4 offset-md-1'>
+                      <button type="button" class="btn btn-default editDropButton font card-button" value="<%= id %>">Edit Drop</button>
+                    </div>
+                  <% } else { %>
+                  <div class='col-md-4 offset-md-3'>
+                    <button type="button" class="btn btn-default viewDropButton font card-button" value="<%= id %>">View Drop</button>
+                  </div>
                   <% } %>
                 </div>
               </div>
@@ -92,16 +112,16 @@
           <% var product_category = result[1][j].poll_category %>
           <% var pollId = result[1][j].id %>
           <% var image = result[1][j].options[0].image_url %>
-        <div class="container">
+        <div class="container poll-card">
          <!-- <div class="row"> -->
 
              <div class="col-md-4">
                <div class='row'>
                  <div class="col-md-12">
                    <div class="col-md-6">
-                     <%= product_category %>
+                     <h3 class='font'><%= product_category %></h3>
+                     <small class='font small-font'>- by <%= user.first_name %></small>
                   </div>
-                   <label for="">posted by which user</label>
                  </div>
                </div>
                <div class='row'>
@@ -117,33 +137,48 @@
                <% totalVotes += votesAdd %>
                <% } %>
              <div class="col-md-8">
-
+               <div class="col-md-12 font-size-large font">
+                 Top Voted Options
+               </div>
                <% for (var k = 0; k < 3; k++) { %>
-                 <% var votes = result[1][j].options[k].votes %>
+                 <% if (result[1][j].options[k].votes == 0) { %>
+                   <% var votes = result[1][j].options[k].votes %>
+                 <% } else { %>
+                 <% var votes = 0 %>
+                 <% } %>
                  <% var title = result[1][j].options[k].title %>
                  <% var optionId = result[1][j].options[k].id %>
-                <div class="col-md-12">
-                  <div class="col-md-4">
-                    <span><%= title %></span>
+                <div class="col-md-12 bar-div">
+                  <div class="col-md-10">
+                    <span class='font'><%= title %></span>
                   </div>
-                  <div class="col-md-2 offset-md-6">
-                    <span id="spanOptionId<%= optionId %>"><%= votes %></span>
+                  <div class="col-md-2">
+                    <span id="spanOptionId<%= optionId %>" class='font'><%= votes %> votes</span>
                   </div>
                 </div>
-                <div class="col-md-12">
-                  <progress id="progressOptionId<%= optionId %>" class="progress progress-info" value="<%= votes %>" max="<%= totalVotes %>"></progress>
+                <div class="col-md-12 bar-div">
+                  <progress id="progressOptionId<%= optionId %>" class="progress progress-info font" value="<%= votes %>" max="<%= totalVotes %>"></progress>
                 </div>
              <% }; %>
-             <button type="button" class="btn btn-secondary viewPollButton" value='<%= pollId %>'>View all options</button>
+             <div class="col-md-12 bar-div">
+               <button type="button" class="btn btn-secondary viewPollButton font card-button" value='<%= pollId %>'>View all options</button>
+             </div>
            </div>
          </div>
          <% }; %>
       </div>
-      <div class="tab-pane" id="createPoll" role="tabpanel">
-        <div>
+      <div class="tab-pane create-container" id="createPoll" role="tabpanel">
+        <div class='row'>
           <form id='createPollForm'>
-            <input id='pollCategory' type="text" name="pollCategory" placeholder="What category does your poll fall under?">
-            <button type="submit">Create Poll!</button>
+            <div class='form-group'>
+              <div class="col-md-12">
+                <small class='small'>Category Of Your Poll</small>
+                <input id='pollCategory' class='form-input' type="text" name="pollCategory" placeholder="What Category Does Your Poll Fall Under?">
+              </div>
+              <div class="col-md-12">
+                <button class='form-button' type="submit">Create Poll!</button>
+              </div>
+            </div>
           </form>
         </div>
       </div>
@@ -162,12 +197,12 @@
       <!-- <div class="tab-pane" id="settings" role="tabpanel">...</div> -->
     </div>
 
-    <div class='container'>
+    <!-- <div class='container'>
       <div class='row'>
         <button id='pollButton' type="button" class="btn btn-default">Polls</button>
         <button id='dropButton' type="button" class="btn btn-default">Drops</button>
       </div>
-    </div>
+    </div> -->
 
 
 
@@ -217,6 +252,40 @@
         </script>
       </form>
     </div> -->
+
+    <!-- create inputs once poll has been created -->
+    <div class='container create-container' id='createOption'>
+      <form id="createOptionForm">
+        <div class="form-group">
+          <div class="col-md-12">
+            <input id="pollId" class='form-input' type='hidden' name="pollId">
+          </div>
+          <div class="col-md-12">
+            <!-- <small class='small'>Image URL</small> -->
+            <input id="imageUrl" class='form-input' type="text" name="imageUrl" placeholder="Share An Image With Us">
+          </div>
+          <div class="col-md-12">
+            <!-- <small class='small'>Title of Your Option</small> -->
+            <input id="pdtTitle" class='form-input' type="text" name="pdtTitle" placeholder="Name Of The Product">
+          </div>
+          <div class="col-md-12">
+            <!-- <small class='small'>Product Code</small> -->
+            <input id="pdtCode" class='form-input' type="text" name="pdtCode" placeholder="Product code">
+          </div>
+          <div class="col-md-12">
+            <!-- <small class='small'>Product Description</small> -->
+            <textarea id="pdtDescription" class='form-input' name="pdtDescription" placeholder="Tell Us More About This Product!"></textarea>
+          </div>
+          <div class="col-md-12">
+            <!-- <small class='small'>Product's Retail Price</small> -->
+            <input id="pdtRetailPrice" class='form-input' type="number" name="pdtRetailPrice" placeholder="Product Current Retail Price">
+          </div>
+          <div class="col-md-12">
+            <button class='form-button' type="submit">Create!</button>
+          </div>
+        </div>
+      </form>
+    </div>
 
     <div class="modal fade" id="checkout">
       <div class="modal-dialog">
