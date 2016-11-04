@@ -141,11 +141,7 @@
                  Top Voted Options
                </div>
                <% for (var k = 0; k < 3; k++) { %>
-                 <% if (result[1][j].options[k].votes == 0) { %>
-                   <% var votes = result[1][j].options[k].votes %>
-                 <% } else { %>
-                 <% var votes = 0 %>
-                 <% } %>
+                 <% var votes = result[1][j].options[k].votes %>
                  <% var title = result[1][j].options[k].title %>
                  <% var optionId = result[1][j].options[k].id %>
                 <div class="col-md-12 bar-div">

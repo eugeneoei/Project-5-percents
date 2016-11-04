@@ -139,10 +139,14 @@ $("document").ready(function(){
         '<div class="card col-sm-4 offset-sm-4 col-md-4 offset-md-4">' +
           '<img class="card-img-top image" src="' + dataFromServer.drop.image_url + '">' +
           '<div class="card-block">' +
-            '<h4 class="card-title">' + dataFromServer.drop.product_category + '</h4>' +
-            '<p class="card-text">' + dataFromServer.drop.product_description + '</p>' +
-            '<button type="button" class="btn btn-default joinDropButton" value="' + dataFromServer.drop.id + '" data-toggle="modal" data-target="#checkout">Join Drop</button>' +
-            '<p>7days left!</p>' +
+            '<h4 class="card-title font">' + dataFromServer.drop.product_category + '</h4>' +
+            '<p class="card-text font">' + dataFromServer.drop.product_description + '</p>' +
+            '<div class="col-md-4 offset-md-3">' +
+              '<button type="button" class="btn btn-default joinDropButton font card-button" value="' + dataFromServer.drop.id + '" data-toggle="modal" data-target="#checkout">Join Drop</button>' +
+            '</div>' +
+            '<div class="col-md-12">' +
+              '<p style="text-align:center;">7days left!</p>' +
+            '</div>' +
           '</div>' +
         '</div>'
       )

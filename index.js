@@ -128,6 +128,7 @@ app.get('/home', function (req, res) {
         where: {id: req.user.id}
       }).then(function(user) {
         // console.log(user);
+        console.log(result[1][0].options[0].votes);
         res.render('user', {result:result, user:user})
       })
     })
