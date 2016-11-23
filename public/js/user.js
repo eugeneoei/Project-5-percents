@@ -55,8 +55,8 @@ $("document").ready(function(){
     var data = {pollCategory: $("#pollCategory").val()};
     // send an ajax POST request
     $.ajax({
-      // url: "http://localhost:3000/polls?token=" + token,
-      url: "http://localhost:300/polls",
+      // url: "/polls?token=" + token,
+      url: "/polls",
       method: "POST",
       data: data,
       headers: {authorization: 'Bearer ' + token},
@@ -83,7 +83,7 @@ $("document").ready(function(){
                 pdtCode: $("#pdtCode").val()};
     // send an ajax POST request
     $.ajax({
-      url: "http://localhost:3000/options",
+      url: "/options",
       method: "POST",
       headers: {authorization: 'Bearer ' + token},
       data: data
@@ -109,7 +109,7 @@ $("document").ready(function(){
                 dropPdtCategory: $("#dropPdtCategory").val()};
     // send an ajax POST request
     $.ajax({
-      url: "http://localhost:3000/drops",
+      url: "/drops",
       method: "POST",
       headers: {authorization: 'Bearer ' + token},
       data: data
@@ -130,7 +130,7 @@ $("document").ready(function(){
 
 
     $.ajax({
-      url: "http://localhost:3000/drops/" + dropID,
+      url: "/drops/" + dropID,
       method: "GET",
       headers: {authorization: 'Bearer ' + token},
     }).done(function(dataFromServer) {
@@ -161,7 +161,7 @@ $("document").ready(function(){
     // console.log('join drop button clicked');
     var dropID = event.currentTarget.value;
     $.ajax({
-      url: "http://localhost:3000/joinDrop/" + dropID,
+      url: "/joinDrop/" + dropID,
       method: "POST",
       headers: {authorization: 'Bearer ' + token}
     }).done(function(dataFromServer) {
@@ -181,7 +181,7 @@ $("document").ready(function(){
     console.log('poll button clicked');
 
     $.ajax({
-      url: "http://localhost:3000/polls",
+      url: "/polls",
       method: "GET",
       headers: {authorization: 'Bearer ' + token}
     }).done(function(dataFromServer) {
@@ -197,7 +197,7 @@ $("document").ready(function(){
   function getAllDrops(event) {
     console.log('drop button clicked');
     $.ajax({
-      url: "http://localhost:3000/drops",
+      url: "/drops",
       method: "GET",
       headers: {authorization: 'Bearer ' + token}
     }).done(function(dataFromServer) {
@@ -218,7 +218,7 @@ $("document").ready(function(){
     $('#addOption').show();
 
     $.ajax({
-      url: "http://localhost:3000/polls/" + pollID,
+      url: "/polls/" + pollID,
       method: "GET",
       headers: {authorization: 'Bearer ' + token}
     }).done(function(dataFromServer) {
@@ -276,7 +276,7 @@ $("document").ready(function(){
     document.getElementById(buttonID).textContent = 'Voted!'
     // send an ajax request and update vote count in database
     $.ajax({
-      url: "http://localhost:3000/options/" + optionID,
+      url: "/options/" + optionID,
       method: "PUT",
       data: data,
       headers: {authorization: 'Bearer ' + token}
@@ -297,7 +297,7 @@ $("document").ready(function(){
     $('#oneNail').show()
 
     $.ajax({
-      url: "http://localhost:3000/drops/" + dropID,
+      url: "/drops/" + dropID,
       method: "GET",
       headers: {authorization: 'Bearer ' + token},
     }).done(function(dataFromServer) {
@@ -359,7 +359,7 @@ $("document").ready(function(){
                 editPdtDiscPrice: $('#editPdtDiscPrice' + dropID).val()
                 }
     $.ajax({
-      url: "http://localhost:3000/drops/" + dropID,
+      url: "/drops/" + dropID,
       method: "PUT",
       data: data,
       headers: {authorization: 'Bearer ' + token},
@@ -406,7 +406,7 @@ $("document").ready(function(){
           // Now submit the form to our server so it can make the charge against the token
           $form.get(0).submit(function() {
             $.ajax({
-              url: "http://localhost:3000/charge",
+              url: "/charge",
               method: "POST",
               data: data,
               headers: {authorization: 'Bearer ' + token}
