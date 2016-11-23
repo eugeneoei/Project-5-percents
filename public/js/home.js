@@ -28,7 +28,7 @@ $("document").ready(function(){
                 password: $("#signupPassword").val()};
     // send an ajax POST request
     $.ajax({
-      url: "http://localhost:3000/signup",
+      url: "/signup",
       method: "POST",
       data: data
     }).done(function(jsonFromServer){
@@ -66,7 +66,7 @@ $("document").ready(function(){
                 password: $("#loginPassword").val()};
     // send an ajax POST request
     $.ajax({
-      url: "https://localhost:3000/login",
+      url: '/login',
       method: "POST",
       data: data
     }).done(function(jsonFromServer){
