@@ -35,6 +35,7 @@ $("document").ready(function(){
       console.log('signup successfully');
       console.log(jsonFromServer);
       if (jsonFromServer.status) {
+        console.log('did you appear?');
         window.localStorage.setItem('jwt', jsonFromServer.token);
         window.location = '/home?token=' + jsonFromServer.token;
         // window.location = '/home?token=';
@@ -72,8 +73,10 @@ $("document").ready(function(){
       console.log('login successfully');
       console.log(jsonFromServer.token);
       if (jsonFromServer.status) {
+        console.log('did you appear?');
         window.localStorage.setItem('jwt', jsonFromServer.token);
         window.location = '/home?token=' + jsonFromServer.token;
+        console.log('did you appear again?');
         // window.location = '/home?token=';
         // $.ajax({
         //   url: "http://localhost:3000/home",
