@@ -140,7 +140,10 @@
                <div class="col-md-12 font-size-large font">
                  Top Voted Options
                </div>
-               <% for (var k = 0; k < 3; k++) { %>
+               <!-- note that max has to be a variable or you will get an error for
+               outputting a value that does not exist if the array has only 1 or 2 values -->
+               <% var max = Math.min(result[1][j].options.length, 3) %>
+               <% for (var k = 0; k < max; k++) { %>
                  <% var votes = result[1][j].options[k].votes %>
                  <% var title = result[1][j].options[k].title %>
                  <% var optionId = result[1][j].options[k].id %>
