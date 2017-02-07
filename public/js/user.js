@@ -51,6 +51,7 @@ $("document").ready(function(){
     event.preventDefault();
     $('#createPoll').hide();
     $('#createOption').show();
+    console.log('create option should show');
 
     var data = {pollCategory: $("#pollCategory").val()};
     // send an ajax POST request
@@ -251,8 +252,8 @@ $("document").ready(function(){
       // }
 
       $('#oneNail').append(
-        '<div class="card col-sm-4 col-md-4">' +
-          '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#addOption' + dataFromServer[0].pollId + '" >ADD AN OPTION</button>' +
+        '<div class="card col-sm-4 col-md-4 option-button">' +
+          '<button type="button" class="btn btn-default card-button font" data-toggle="modal" data-target="#addOption' + dataFromServer[0].pollId + '" >ADD AN OPTION</button>' +
           // '<button id="addOptionButton" type="button" class="btn btn-secondary data-toggle="modal" data-target="#addOption">Add Option</button>' +
         '</div>'
       )

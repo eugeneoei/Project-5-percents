@@ -233,6 +233,12 @@ input[type=text]:focus {
 .font-size-large {
   font-size: 35px;
 }
+
+.option-button {
+  background: none;
+  border: none;
+}
+
 /*.nav-tabs .nav-link:hover {
   background-color: #373737;
   color: white;
